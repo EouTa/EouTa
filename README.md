@@ -1,16 +1,153 @@
-## Hi there 👋
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
 
-<!--
-**EouTa/EouTa** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
 
-Here are some ideas to get you started:
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSH TECH</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Header -->
+  <header class="bg-gray-800 text-white text-center py-6">
+    <h1 class="text-3xl font-bold">MSH TECH</h1>
+    <p class="mt-2">اخبار، گوشی‌ها و آموزش‌های به‌روز</p>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="bg-gray-700 text-white py-4">
+    <div class="container mx-auto flex justify-center space-x-8">
+      <a href="#news" class="hover:text-gray-300">اخبار</a>
+      <a href="#phones" class="hover:text-gray-300">گوشی‌ها</a>
+      <a href="#tutorials" class="hover:text-gray-300">آموزش</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mx-auto py-8">
+    <!-- News Section -->
+    <section id="news" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 text-center">اخبار به‌روز</h2>
+      <div id="news-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- News items will be populated by JavaScript -->
+      </div>
+    </section>
+
+    <!-- Phones Section -->
+    <section id="phones" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 text-center">گوشی‌ها</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-4 rounded-lg shadow">
+          <img src="https://images.unsplash.com/photo-1677178652557-8eb501737e83" alt="سامسونگ گلکسی S23" class="w-full h-48 object-cover rounded mb-4">
+          <h3 class="text-xl font-semibold">سامسونگ گلکسی S23</h3>
+          <p><strong>حافظه:</strong> 256 گیگابایت</p>
+          <p><strong>دوربین:</strong> 50 مگاپیکسل</p>
+          <p><strong>پردازنده:</strong> Snapdragon 8 Gen 2</p>
+          <p><strong>قیمت:</strong> ۳۵,۰۰۰,۰۰۰ تومان</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+          <img src="https://images.unsplash.com/photo-1661749719375-d9f6f66d6a82" alt="آیفون 14 پرو" class="w-full h-48 object-cover rounded mb-4">
+          <h3 class="text-xl font-semibold">آیفون 14 پرو</h3>
+          <p><strong>حافظه:</strong> 512 گیگابایت</p>
+          <p><strong>دوربین:</strong> 48 مگاپیکسل</p>
+          <p><strong>پردازنده:</strong> A16 Bionic</p>
+          <p><strong>قیمت:</strong> ۵۵,۰۰۰,۰۰۰ تومان</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+          <img src="https://images.unsplash.com/photo-1676999235950-fb195d52d43e" alt="شیائومی 13" class="w-full h-48 object-cover rounded mb-4">
+          <h3 class="text-xl font-semibold">شیائومی 13</h3>
+          <p><strong>حافظه:</strong> 128 گیگابایت</p>
+          <p><strong>دوربین:</strong> 54 مگاپیکسل</p>
+          <p><strong>پردازنده:</strong> Snapdragon 8 Gen 1</p>
+          <p><strong>قیمت:</strong> ۲۵,۰۰۰,۰۰۰ تومان</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tutorials Section -->
+    <section id="tutorials">
+      <h2 class="text-2xl font-bold mb-4 text-center">آموزش</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-xl font-semibold">آموزش استفاده از تلگرام</h3>
+          <p>در این آموزش، نحوه استفاده از قابلیت‌های جدید تلگرام مثل ربات‌ها و کانال‌ها توضیح داده شده است。</p>
+          <a href="https://t.me/MSH_TECH" class="text-blue-500 underline">مشاهده آموزش</a>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-xl font-semibold">افزایش امنیت گوشی</h3>
+          <p>نکاتی برای محافظت از گوشی در برابر هک و ویروس‌ها، شامل تنظیمات امنیتی و اپلیکیشن‌های پیشنهادی。</p>
+          <a href="https://t.me/MSH_TECH" class="text-blue-500 underline">مشاهده آموزش</a>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-xl font-semibold">آموزش عکاسی با گوشی</h3>
+          <p>چگونه با دوربین گوشی خود عکس‌های حرفه‌ای بگیرید، شامل تنظیمات و نکات ویرایش。</p>
+          <a href="https://t.me/MSH_TECH" class="text-blue-500 underline">مشاهده آموزش</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-center py-4">
+    <p>تمامی حقوق محفوظ است © ۱۴۰۴ | <a href="https://t.me/MSH_TECH" class="underline">کانال تلگرام</a></p>
+  </footer>
+
+  <!-- JavaScript for News -->
+  <script>
+    const newsData = [
+      { title: "خبر جدید درباره تکنولوژی", content: "جزئیات تازه‌ای درباره پیشرفت‌های تکنولوژی منتشر شد.", date: "۱۴۰۴/۰۲/۰۴" },
+      { title: "رونمایی از گوشی جدید", content: "یک شرکت بزرگ از گوشی جدید خود رونمایی کرد.", date: "۱۴۰۴/۰۲/۰۳" },
+      { title: "به‌روزرسانی نرم‌افزاری", content: "جدیدترین آپدیت سیستم‌عامل منتشر شد.", date: "۱۴۰۴/۰۲/۰۲" }
+    ];
+
+    const newsContainer = document.getElementById('news-container');
+    
+    newsData.forEach(news => {
+      const newsItem = document.createElement('div');
+      newsItem.className = 'bg-white p-4 rounded-lg shadow';
+      newsItem.innerHTML = `
+        <h3 class="text-xl font-semibold">${news.title}</h3>
+        <p class="text-gray-600">${news.date}</p>
+        <p>${news.content}</p>
+      `;
+      newsContainer.appendChild(newsItem);
+    });
+  </script>
