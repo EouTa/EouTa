@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSH TECH | فناوری و موبایل</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+    .news-card:hover {
+      transform: translateY(-5px);
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body class="font-sans">
+  <!-- هدر با منوی جدید -->
+  <header class="bg-gray-900 text-white shadow-lg">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+      <h1 class="text-2xl font-bold">MSH TECH</h1>
+      <nav class="hidden md:flex space-x-8 space-x-reverse">
+        <a href="#home" class="hover:text-blue-400">صفحه اصلی</a>
+        <a href="#news" class="hover:text-blue-400">اخبار</a>
+        <a href="#phones" class="hover:text-blue-400">گوشی‌ها</a>
+        <a href="#tutorials" class="hover:text-blue-400">آموزش</a>
+      </nav>
+      <button class="md:hidden" id="menu-toggle">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="md:hidden hidden bg-gray-800 py-2" id="mobile-menu">
+      <a href="#home" class="block px-4 py-2 hover:bg-gray-700">صفحه اصلی</a>
+      <a href="#news" class="block px-4 py-2 hover:bg-gray-700">اخبار</a>
+      <a href="#phones" class="block px-4 py-2 hover:bg-gray-700">گوشی‌ها</a>
+      <a href="#tutorials" class="block px-4 py-2 hover:bg-gray-700">آموزش</a>
+    </div>
+  </header>
+
+  <!-- اسلایدر اخبار برگزیده -->
+  <section id="home" class="py-12">
+    <div class="swiper mySwiper container mx-auto">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide bg-white rounded-xl shadow-lg overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475" alt="خبر فناوری" class="w-full h-64 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">جدیدترین پیشرفت‌های هوش مصنوعی در ۲۰۲۴</h3>
+            <p class="text-gray-600 mb-4">۱۴۰۳/۰۲/۱۵</p>
+            <p>شرکت‌های بزرگ فناوری آخرین دستاوردهای خود را در حوزه هوش مصنوعی معرفی کردند.</p>
+            <a href="#" class="text-blue-500 mt-4 inline-block">ادامه مطلب</a>
+          </div>
+        </div>
+        <div class="swiper-slide bg-white rounded-xl shadow-lg overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c" alt="رونمایی گوشی" class="w-full h-64 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">رونمایی از گلکسی Z Fold 6 سامسونگ</h3>
+            <p class="text-gray-600 mb-4">۱۴۰۳/۰۲/۱۰</p>
+            <p>سامسونگ از جدیدترین گوشی تاشوی خود با طراحی بهبودیافته رونمایی کرد.</p>
+            <a href="#" class="text-blue-500 mt-4 inline-block">ادامه مطلب</a>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </section>
+
+  <!-- دکمه‌های دسترسی سریع -->
+  <section class="container mx-auto my-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <a href="#news" class="bg-blue-600 text-white text-center py-6 rounded-lg shadow-lg hover:bg-blue-700 transition">
+        <h3 class="text-xl font-bold">اخبار فناوری</h3>
+        <p>آخرین اخبار دنیای تکنولوژی</p>
+      </a>
+      <a href="#phones" class="bg-green-600 text-white text-center py-6 rounded-lg shadow-lg hover:bg-green-700 transition">
+        <h3 class="text-xl font-bold">مقایسه گوشی‌ها</h3>
+        <p>بررسی تخصصی موبایل‌ها</p>
+      </a>
+      <a href="#tutorials" class="bg-purple-600 text-white text-center py-6 rounded-lg shadow-lg hover:bg-purple-700 transition">
+        <h3 class="text-xl font-bold">آموزش‌های کاربردی</h3>
+        <p>راهنمای استفاده از فناوری</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- اسکریپت‌ها -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // فعال کردن Swiper
+    const swiper = new Swiper(".mySwiper", {
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      autoplay: {
+        delay: 5000,
+      },
+    });
+
+    // فعال کردن AOS (انیمیشن اسکرول)
+    AOS.init({
+      duration: 1000,
+    });
+
+    // منوی موبایل
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>
